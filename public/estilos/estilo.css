@@ -1,5 +1,4 @@
 * {
-	font-family: "Roboto", sans-serif;
 	box-sizing: border-box;
 }
 body {
@@ -41,11 +40,13 @@ body {
 	margin-left: 25px;
 }
 .titulo {
+	font-family: "Roboto", sans-serif;
 	margin-bottom: 20px;
 	font-size: 40px;
 	font-weight: 600;
 }
 .paragrafo {
+	font-family: "Roboto", sans-serif;
 	font-size: 20px;
 	font-weight: 300;
 }
@@ -59,6 +60,7 @@ body {
 }
 .alternativas-superior {
 	display: flex;
+	font-family: "Roboto", sans-serif;
 	justify-content: space-around;
 	font-size: 20px;
 	font-weight: 600;
@@ -97,6 +99,7 @@ body {
 	flex-direction: column;
 	align-items: center;
 	margin-top: 20px;
+	font-family: "Roboto", sans-serif;
 	font-size: 25px;
 	font-weight: 600;
 }
@@ -114,7 +117,7 @@ body {
 .sua-resposta > input {
 	border: none;
 	width: 55px;
-	font-family: "Roboto";
+	font-family: "Roboto", sans-serif;
 	font-weight: 600;
 	font-size: 30px;
 	text-align: center;
@@ -180,4 +183,12 @@ svg {
 	100% {
 		opacity: 1;
 	}
+}
+/* Tirar barra lateral do input NUMBER */
+input[type="number"]::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+}
+input[type="number"] {
+	-moz-appearance: textfield;
+	appearance: textfield;
 }

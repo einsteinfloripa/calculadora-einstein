@@ -6,7 +6,14 @@ function verificarInputValido(valor) {
 	}
 }
 
-function verificarClicados(div) {}
+function verificarClicados(div) {
+	let guardaNodeListClicados = div.querySelectorAll('.logo-clicada');
+	let valoresArray = [];
+	guardaNodeListClicados.forEach(element => {
+		valoresArray.push(element.id);
+	});
+	console.log(valoresArray);
+}
 
 // Funçoes para construção do card
 export default function Card(props) {
