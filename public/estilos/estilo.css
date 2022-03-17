@@ -1,0 +1,183 @@
+* {
+	font-family: "Roboto", sans-serif;
+	box-sizing: border-box;
+}
+body {
+	background-color: rgba(94, 94, 94, 0.397);
+}
+.conteudo {
+	display: flex;
+	justify-content: center;
+}
+
+.cards {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1px 150px;
+}
+
+/* Estilos para o Card */
+.card {
+	display: flex;
+	flex-direction: column;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	height: 550px;
+	width: 400px;
+	border-radius: 10px;
+	background-color: white;
+	box-shadow: 8px 7px 6px 1px #7d7d7d;
+}
+.topo-card {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 34%;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+/* Topo Carda */
+.topo-card > span {
+	width: 90%;
+	margin-left: 25px;
+}
+.titulo {
+	margin-bottom: 20px;
+	font-size: 40px;
+	font-weight: 600;
+}
+.paragrafo {
+	font-size: 20px;
+	font-weight: 300;
+}
+
+/* Meio Card */
+.meio-card {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	height: 33%;
+}
+.alternativas-superior {
+	display: flex;
+	justify-content: space-around;
+	font-size: 20px;
+	font-weight: 600;
+}
+.alternativas-superior > span {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.alternativas-inferior {
+	display: flex;
+	justify-content: space-around;
+	font-size: 20px;
+	font-weight: 600;
+}
+.alternativas-inferior > span {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.logo-clicada {
+	fill: #011e30;
+}
+.logo {
+	fill: white;
+}
+/* Base Card */
+.base-card {
+	display: flex;
+	justify-content: center;
+	border-top: 1px solid rgba(0, 0, 0, 0.2);
+	height: 33%;
+}
+.base-card > div {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 20px;
+	font-size: 25px;
+	font-weight: 600;
+}
+.sua-resposta {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 80px;
+	height: 80px;
+	margin-top: 20px;
+	border: 2px solid black;
+	border-radius: 40px;
+	background-color: rgba(196, 191, 191, 0.692);
+}
+.sua-resposta > input {
+	border: none;
+	width: 55px;
+	font-family: "Roboto";
+	font-weight: 600;
+	font-size: 30px;
+	text-align: center;
+	background-color: rgba(196, 191, 191, 0);
+}
+svg {
+	cursor: pointer;
+}
+/* Animaçao */
+.fadeInUp {
+	-webkit-animation-name: fadeInUp;
+	animation-name: fadeInUp;
+	-webkit-animation-duration: 1s;
+	animation-duration: 1s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
+@-webkit-keyframes fadeInUp {
+	0% {
+		opacity: 0;
+		-webkit-transform: translate3d(0, 100%, 0);
+		transform: translate3d(0, 100%, 0);
+	}
+	100% {
+		opacity: 1;
+		-webkit-transform: none;
+		transform: none;
+	}
+}
+@keyframes fadeInUp {
+	0% {
+		opacity: 0;
+		-webkit-transform: translate3d(0, 100%, 0);
+		transform: translate3d(0, 100%, 0);
+	}
+	100% {
+		opacity: 1;
+		-webkit-transform: none;
+		transform: none;
+	}
+}
+.fadeIn {
+	-webkit-animation-name: fadeIn;
+	animation-name: fadeIn;
+	-webkit-animation-delay: 1.2s;
+	-webkit-animation-duration: 1s;
+	animation-duration: 1s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
+@-webkit-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}

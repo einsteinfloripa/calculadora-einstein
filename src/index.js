@@ -1,17 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import ReactDom from "react-dom";
+import Card from "./Card";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+function App() {
+    let gerarCards = () => {
+        let numCards = prompt("Quantos cards você deseja?");
+        let numAlternativa = prompt('Quantas alternativas você deseja?')
+        let cards = [];
+		for (let i = 0; i < numCards; i++) {
+			cards.push(<Card alternativas={numAlternativa}/>);
+		}
+		return cards;
+	};
+	return <div className="cards">{gerarCards()}</div>;
+}
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const app = App();
+ReactDom.render(app, document.querySelector(".root"));
