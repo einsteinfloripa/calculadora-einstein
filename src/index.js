@@ -7,7 +7,7 @@ function App() {
         let numAlternativa = prompt('Quantas alternativas você deseja?')
         let cards = [];
 		for (let i = 0; i < numCards; i++) {
-			cards.push(<Card alternativas={numAlternativa}/>);
+			cards.push(<Card numAlternativas={numAlternativa}/>);
 		}
 		return cards;
 	};

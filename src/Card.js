@@ -1,30 +1,24 @@
 import ReactDOM from "react-dom";
+import React from "react";
 
-function verificarInputValido(valor) {
-	if (valor.value < 0 || valor.value > 99) {
-		valor.value = "";
-	}
-}
-
-function verificarClicados(div) {
-	let guardaNodeListClicados = div.querySelectorAll('.logo-clicada');
-	let valoresArray = [];
-	guardaNodeListClicados.forEach(element => {
-		valoresArray.push(element.id);
-	});
-	console.log(valoresArray);
-}
-
-// Funçoes para construção do card
+// Função para construção do card (juntar tudo)
 export default function Card(props) {
+	const [somatorio, setSomatorio] = React.useState(0);
 	return (
 		<div className="card fadeInUp">
 			<TopoCard />
-			<MeioCard alternativas={props.alternativas} />
-			<BaseCard />
+			<MeioCard
+				numAlternativas={props.numAlternativas}
+				callback={(valorAlternativa) => {
+					setSomatorio(somatorio + valorAlternativa);
+					console.log("fui exacutado");
+				}}
+			/>
+			<BaseCard somatorio={somatorio} />
 		</div>
 	);
 }
+// Funções que constroem as partes dos cards
 function TopoCard() {
 	return (
 		<div className="topo-card">
@@ -38,30 +32,40 @@ function TopoCard() {
 	);
 }
 function MeioCard(props) {
+	const { numAlternativas, callback } = props;
+	const valoresAlternativas = [1, 2, 4, 8, 16, 32, 64];
+	const arrayAlternativasDesejadas = valoresAlternativas.filter((elemento) => {
+		return elemento <= valoresAlternativas[numAlternativas - 1];
+	});
+
 	return (
 		<div className="meio-card">
-			<MeioAlternativas alternativas={props.alternativas} />
+			<MeioAlternativas alternativasDesejadas={arrayAlternativasDesejadas} callback={callback}/>
 		</div>
 	);
 }
 function MeioAlternativas(props) {
-	let gerarAlternativas = () => {
-		const arrayAlternativas = [];
-		const arrayValorAlternativas = [1, 2, 4, 8, 16, 32, 64];
-		for (let i = 0; i < props.alternativas; i++) {
-			arrayAlternativas.push(
-				<span className="alternativa">
-					<p className="fadeIn">{arrayValorAlternativas[i]}</p>
-					<GerarLogoSVG id={arrayValorAlternativas[i]} />
-				</span>
-			);
-		}
-		return arrayAlternativas;
-	};
-	return <div className="alternativas-superior">{gerarAlternativas()}</div>;
+	const { alternativasDesejadas, callback } = props;
+
+	return alternativasDesejadas.map((element) => {
+		return (
+			<span className="alternativa">
+				<p className="fadeIn">{element}</p>
+				<GerarLogoSVG valorAlternativa={element} callback={callback} />
+			</span>
+		);
+	});
 }
 
-function BaseCard() {
+function BaseCard(props) {
+	// declarar funções úteis
+	function verificarInputValido(valor) {
+		if (valor.value < 0 || valor.value > 99) {
+			valor.value = "";
+		}
+	}
+
+	const { somatorio } = props;
 	return (
 		<div className="base-card">
 			<div>
@@ -70,9 +74,10 @@ function BaseCard() {
 					<input
 						id="input-resposta"
 						type="number"
-						placeholder="0"
 						min="0"
 						max="99"
+						placeholder="0"
+						value={somatorio}
 						onChange={(input) => {
 							verificarInputValido(input.currentTarget);
 						}}
@@ -83,24 +88,27 @@ function BaseCard() {
 	);
 }
 function GerarLogoSVG(props) {
+	const { valorAlternativa, callback } = props;
+	const [selecionado, setSelecionado] = React.useState(false);
 	return (
 		<>
 			<svg
 				id={props.id}
+				fill="white"
 				version="1.0"
 				xmlns="http://www.w3.org/2000/svg"
 				width="60px"
 				height="60px"
 				viewBox="0 0 330.000000 293.000000"
 				preserveAspectRatio="xMidYMid meet"
-				onClick={(alternativa) => {
-					let divCardPai = alternativa.currentTarget.parentElement.offsetParent;
-					// Altera entre clicado e não clicado
-					alternativa.currentTarget.classList.toggle("logo");
-					alternativa.currentTarget.classList.toggle("logo-clicada");
-					verificarClicados(divCardPai);
+				onClick={() => {
+					setSelecionado(!selecionado);
+					const valorAtualizar = !selecionado
+						? valorAlternativa
+						: valorAlternativa * -1;
+					callback(valorAtualizar);
 				}}
-				className="logo fadeIn">
+				className={`fadeIn ${selecionado ? "selecionado" : ""}`}>
 				<g
 					transform="translate(0.000000,293.000000) scale(0.100000,-0.100000)"
 					stroke="black"

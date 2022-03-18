@@ -54,39 +54,28 @@ body {
 /* Meio Card */
 .meio-card {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
+	flex-wrap: wrap;
 	justify-content: space-around;
+	align-items: center;
 	height: 33%;
 }
-.alternativas-superior {
+.alternativas {
 	display: flex;
 	font-family: "Roboto", sans-serif;
 	justify-content: space-around;
 	font-size: 20px;
 	font-weight: 600;
 }
-.alternativas-superior > span {
+.alternativas > span {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
-.alternativas-inferior {
-	display: flex;
-	justify-content: space-around;
-	font-size: 20px;
-	font-weight: 600;
-}
-.alternativas-inferior > span {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-.logo-clicada {
+.selecionado {
 	fill: #011e30;
 }
-.logo {
-	fill: white;
-}
+
 /* Base Card */
 .base-card {
 	display: flex;
