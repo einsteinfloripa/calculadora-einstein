@@ -3,12 +3,13 @@ import React from "react";
 
 // Função para construção do card (juntar tudo)
 export default function Card(props) {
+	const { numAlternativas, numCards } = props;
 	const [somatorio, setSomatorio] = React.useState(0);
 	return (
 		<div className="card fadeInUp">
-			<TopoCard />
+			<TopoCard numCards={numCards} />
 			<MeioCard
-				numAlternativas={props.numAlternativas}
+				numAlternativas={numAlternativas}
 				callback={(valorAlternativa) => {
 					setSomatorio(somatorio + valorAlternativa);
 					console.log("fui exacutado");
@@ -19,11 +20,12 @@ export default function Card(props) {
 	);
 }
 // Funções que constroem as partes dos cards
-function TopoCard() {
+function TopoCard(props) {
+	const {numCards} = props;
 	return (
 		<div className="topo-card">
 			<span>
-				<p className="titulo">Questão n</p>
+				<p className="titulo">{`Questão ${numCards}`}</p>
 				<p className="paragrafo">
 					Selecione abaixo as proposições que você considera corretas
 				</p>
@@ -40,7 +42,10 @@ function MeioCard(props) {
 
 	return (
 		<div className="meio-card">
-			<MeioAlternativas alternativasDesejadas={arrayAlternativasDesejadas} callback={callback}/>
+			<MeioAlternativas
+				alternativasDesejadas={arrayAlternativasDesejadas}
+				callback={callback}
+			/>
 		</div>
 	);
 }
