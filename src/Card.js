@@ -25,7 +25,7 @@ function TopoCard(props) {
 	return (
 		<div className="topo-card">
 			<span>
-				<p className="titulo">{`Questão ${numCards}`}</p>
+				<p className="titulo">{numCards}</p>
 				<p className="paragrafo">
 					Selecione abaixo as proposições que você considera corretas
 				</p>
