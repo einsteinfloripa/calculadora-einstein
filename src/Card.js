@@ -2,9 +2,9 @@ import ReactDOM from "react-dom";
 import React from "react";
 
 // Função para construção do card (juntar tudo)
-export default function Card(props) {
-	const { numAlternativas, numCards } = props;
+export default function Card({ numAlternativas, numCards }) {
 	const [somatorio, setSomatorio] = React.useState(0);
+	
 	return (
 		<div className="card fadeInUp">
 			<TopoCard numCards={numCards} />
@@ -12,7 +12,6 @@ export default function Card(props) {
 				numAlternativas={numAlternativas}
 				callback={(valorAlternativa) => {
 					setSomatorio(somatorio + valorAlternativa);
-					console.log("fui exacutado");
 				}}
 			/>
 			<BaseCard somatorio={somatorio} />
@@ -21,7 +20,7 @@ export default function Card(props) {
 }
 // Funções que constroem as partes dos cards
 function TopoCard(props) {
-	const {numCards} = props;
+	const { numCards } = props;
 	return (
 		<div className="topo-card">
 			<span>

@@ -3,29 +3,41 @@
 }
 body {
 	background-color: rgba(94, 94, 94, 0.397);
+	overflow-y: hidden;
 }
 .conteudo {
+	height: 100vh;
 	display: flex;
 	justify-content: center;
+	align-items: center;
 }
 
 .cards {
-	display: grid;
-	grid-template-columns: 1fr 1fr; 
-	gap: 1px 150px;
+	width: 100vw;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
 }
-
+.cards > ion-icon {
+	text-align: center;
+	font-size: 60px;
+	color: white;
+}
 /* Estilos para o Card */
 .card {
 	display: flex;
 	flex-direction: column;
-	margin-top: 50px;
-	margin-bottom: 50px;
 	height: 550px;
 	width: 400px;
 	border-radius: 10px;
 	background-color: white;
 	box-shadow: 8px 7px 6px 1px #7d7d7d;
+}
+.avancar {
+	margin-left: 40px;
+}
+.retornar {
+	margin-right: 40px;
 }
 .topo-card {
 	display: flex;
@@ -67,10 +79,12 @@ body {
 	font-size: 20px;
 	font-weight: 600;
 }
-.alternativas > span {
+.alternativa {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	font-size: 22px;
+	font-weight: 600;
 }
 .selecionado {
 	fill: #011e30;
@@ -112,7 +126,7 @@ body {
 	text-align: center;
 	background-color: rgba(196, 191, 191, 0);
 }
-svg {
+svg, ion-icon {
 	cursor: pointer;
 }
 /* Animaçao */
