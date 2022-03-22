@@ -21,49 +21,45 @@ export default function DeckCards({ numAlternativa, numCards }) {
 				}}></ion-icon>
 		),
 	};
-	const [passarPage, setPassarPage] = React.useState(0);
+    const [guardaSomatorio, setGuardaSomatorio] = React.useState(0);
+	const cardsPergunta = [];
+	const cardsGabarito = [];
 
+	const [passarPage, setPassarPage] = React.useState(0);
+	let gerarCards = () => {
+		for (let i = 0; i < numCards; i++) {
+            let teste = i
+			cardsPergunta.push(
+				<>
+					<Card
+						numAlternativas={numAlternativa}
+						numCards={`Questão ${i + 1}`}
+						key={`${teste}`}
+					/>
+				</>,
+			);
+			cardsGabarito.push(
+				<>
+					<Card
+						numAlternativas={numAlternativa}
+						numCards={"Gabarito"}
+						key={`${teste+1}`}
+					/>
+				</>,
+			);
+		}
+	};
+	gerarCards();
 	return (
 		<div className='cards'>
 			{
 				<>
 					{passarPage > 0 ? icones.retornar : <></>}
-					<CardsPergunta numAlternativa={numAlternativa} numCards={numCards} passarPage={passarPage} />
+					{cardsPergunta[passarPage]}
+					{cardsGabarito[passarPage]}
 					{passarPage < numCards - 1 ? icones.avancar : <></>}
 				</>
 			}
 		</div>
 	);
-}
-
-function CardsPergunta({ numAlternativa, numCards, passarPage }) {
-	const cardsPergunta = [];
-
-	for (let i = 0; i < numCards; i++) {
-		cardsPergunta.push(
-			<>
-				<Card
-					numAlternativas={numAlternativa}
-					numCards={`Questão ${i + 1}`}
-					key={`Q${i}`}
-				/>
-			</>,
-		);
-	}
-	return cardsPergunta[passarPage];
-}
-function CardsGabarito() {
-	const cardsGabarito = [];
-
-	for (let i = 0; i < array.length; i++) {
-		cardsGabarito.push(
-			<>
-				<Card
-					numAlternativas={numAlternativa}
-					numCards={"Gabarito"}
-					key={`G${i}`}
-				/>
-			</>,
-		);
-	}
 }

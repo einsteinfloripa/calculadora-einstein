@@ -4,7 +4,6 @@ import React from "react";
 // Função para construção do card (juntar tudo)
 export default function Card({ numAlternativas, numCards }) {
 	const [somatorio, setSomatorio] = React.useState(0);
-	
 	return (
 		<div className="card fadeInUp">
 			<TopoCard numCards={numCards} />
@@ -12,6 +11,7 @@ export default function Card({ numAlternativas, numCards }) {
 				numAlternativas={numAlternativas}
 				callback={(valorAlternativa) => {
 					setSomatorio(somatorio + valorAlternativa);
+					
 				}}
 			/>
 			<BaseCard somatorio={somatorio} />
