@@ -1,124 +1,128 @@
-import ReactDOM from "react-dom";
 import React from "react";
 
 // Função para construção do card (juntar tudo)
-export default function Card({ numAlternativas, numCards }) {
-	const [somatorio, setSomatorio] = React.useState(0);
+export default function Card({
+	numAlternativas,
+	numCards,
+	somatorio,
+	alterarSomatorio,
+	alternativasMarcadas,
+	alterarAlternativa,
+}) {
 	return (
-		<div className="card fadeInUp">
+		<div className='card'>
 			<TopoCard numCards={numCards} />
 			<MeioCard
+				alterarSomatorio={alterarSomatorio}
 				numAlternativas={numAlternativas}
-				callback={(valorAlternativa) => {
-					setSomatorio(somatorio + valorAlternativa);
-					
-				}}
+				alternativasMarcadas={alternativasMarcadas}
+				alterarAlternativa={alterarAlternativa}
 			/>
 			<BaseCard somatorio={somatorio} />
 		</div>
 	);
 }
 // Funções que constroem as partes dos cards
-function TopoCard(props) {
-	const { numCards } = props;
+function TopoCard({ numCards }) {
 	return (
-		<div className="topo-card">
+		<div className='topo-card'>
 			<span>
-				<p className="titulo">{numCards}</p>
-				<p className="paragrafo">
+				<p className='titulo'>{numCards}</p>
+				<p className='paragrafo'>
 					Selecione abaixo as proposições que você considera corretas
 				</p>
 			</span>
 		</div>
 	);
 }
-function MeioCard(props) {
-	const { numAlternativas, callback } = props;
+function MeioCard({
+	numAlternativas,
+	alterarSomatorio,
+	alternativasMarcadas,
+	alterarAlternativa,
+}) {
 	const valoresAlternativas = [1, 2, 4, 8, 16, 32, 64];
 	const arrayAlternativasDesejadas = valoresAlternativas.filter((elemento) => {
 		return elemento <= valoresAlternativas[numAlternativas - 1];
 	});
 
 	return (
-		<div className="meio-card">
+		<div className='meio-card'>
 			<MeioAlternativas
 				alternativasDesejadas={arrayAlternativasDesejadas}
-				callback={callback}
+				alterarSomatorio={alterarSomatorio}
+				alternativasMarcadas={alternativasMarcadas}
+				alterarAlternativa={alterarAlternativa}
 			/>
 		</div>
 	);
 }
-function MeioAlternativas(props) {
-	const { alternativasDesejadas, callback } = props;
-
-	return alternativasDesejadas.map((element) => {
+function MeioAlternativas({
+	alternativasDesejadas,
+	alterarSomatorio,
+	alternativasMarcadas,
+	alterarAlternativa,
+}) {
+	return alternativasDesejadas.map((element, index) => {
 		return (
-			<span className="alternativa">
-				<p className="fadeIn">{element}</p>
-				<GerarLogoSVG valorAlternativa={element} callback={callback} />
+			<span className='alternativa' key={index}>
+				<p className='fadeIn'>{element}</p>
+				<GerarLogoSVG
+					valorAlternativa={element}
+					alterarSomatorio={alterarSomatorio}
+					meuIndex={index}
+					estadoAlternativa={alternativasMarcadas[index]}
+					alterarAlternativa={alterarAlternativa}
+				/>
 			</span>
 		);
 	});
 }
 
-function BaseCard(props) {
-	// declarar funções úteis
-	function verificarInputValido(valor) {
-		if (valor.value < 0 || valor.value > 99) {
-			valor.value = "";
-		}
-	}
-
-	const { somatorio } = props;
+function BaseCard({ somatorio }) {
 	return (
-		<div className="base-card">
+		<div className='base-card'>
 			<div>
 				<p>Sua Resposta</p>
-				<div className="sua-resposta">
-					<input
-						id="input-resposta"
-						type="number"
-						min="0"
-						max="99"
-						placeholder="0"
-						value={somatorio}
-						onChange={(input) => {
-							verificarInputValido(input.currentTarget);
-						}}
-					/>
+				<div className='sua-resposta'>
+					<p>{somatorio}</p>
 				</div>
 			</div>
 		</div>
 	);
 }
-function GerarLogoSVG(props) {
-	const { valorAlternativa, callback } = props;
-	const [selecionado, setSelecionado] = React.useState(false);
+function GerarLogoSVG({
+	valorAlternativa,
+	alterarSomatorio,
+	meuIndex,
+	estadoAlternativa,
+	alterarAlternativa,
+}) {
 	return (
 		<>
 			<svg
-				id={props.id}
-				fill="white"
-				version="1.0"
-				xmlns="http://www.w3.org/2000/svg"
-				width="60px"
-				height="60px"
-				viewBox="0 0 330.000000 293.000000"
-				preserveAspectRatio="xMidYMid meet"
+				id={meuIndex}
+				fill='white'
+				version='1.0'
+				xmlns='http://www.w3.org/2000/svg'
+				width='60px'
+				height='60px'
+				viewBox='0 0 330.000000 293.000000'
+				preserveAspectRatio='xMidYMid meet'
 				onClick={() => {
-					setSelecionado(!selecionado);
-					const valorAtualizar = !selecionado
+					alterarAlternativa(meuIndex);
+					const valorAtualizar = !estadoAlternativa
 						? valorAlternativa
 						: valorAlternativa * -1;
-					callback(valorAtualizar);
+					alterarSomatorio(valorAtualizar);
 				}}
-				className={`fadeIn ${selecionado ? "selecionado" : ""}`}>
+				className={`fadeIn ${estadoAlternativa ? "selecionado" : ""}`}>
 				<g
-					transform="translate(0.000000,293.000000) scale(0.100000,-0.100000)"
-					stroke="black"
-					strokeWidth="70px">
+					transform='translate(0.000000,293.000000) scale(0.100000,-0.100000)'
+					stroke='black'
+					strokeWidth='70px'>
 					<path
-						d="M1910 2772 c-133 -38 -247 -98 -347 -184 -112 -95 -173 -190 -173
+						d='M1910 2772 c-133 -38 -247 -98 -347 -184 -112 -95 -173 -190 -173
 -268 0 -41 -1 -42 -27 -36 -16 4 -89 9 -164 13 -109 4 -151 2 -213 -11 -158
 -36 -309 -137 -380 -254 -43 -73 -53 -104 -81 -265 -30 -172 -55 -238 -118
 -304 -57 -61 -111 -89 -196 -105 -34 -6 -61 -17 -61 -23 0 -6 18 -19 40 -29
@@ -135,10 +139,10 @@ function GerarLogoSVG(props) {
 -54 -30 -154 -46 -243 -38 -172 14 -290 43 -423 100 -70 30 -147 61 -172 67
 -54 15 -56 28 -19 108 l25 55 -21 17 c-12 10 -38 20 -58 23 -63 11 -62 10 -62
 78 0 124 55 235 147 296 39 26 41 29 25 43 -48 42 -85 52 -207 55 -92 2 -135
--1 -185 -15z"
+-1 -185 -15z'
 					/>
 					<path
-						d="M1384 632 c-28 -10 -73 -35 -102 -55 l-51 -38 -25 43 c-21 35 -26 39
+						d='M1384 632 c-28 -10 -73 -35 -102 -55 l-51 -38 -25 43 c-21 35 -26 39
 -26 20 0 -13 7 -37 16 -54 15 -29 15 -32 -14 -72 -45 -63 -61 -99 -77 -177
 -19 -87 -11 -100 40 -70 48 28 55 27 55 -9 0 -38 22 -39 90 -5 59 30 60 30 60
 6 0 -28 6 -29 93 -18 69 8 83 7 120 -9 33 -15 64 -19 162 -18 66 1 161 5 212
@@ -146,7 +150,7 @@ function GerarLogoSVG(props) {
 -4 32 -16 44 -27 13 -12 29 -18 38 -14 33 12 0 157 -59 262 -24 43 -24 43 -4
 61 33 29 69 113 49 113 -5 0 -12 -9 -16 -19 -3 -10 -19 -38 -36 -61 l-30 -41
 -37 32 c-47 42 -124 76 -189 85 -49 6 -53 5 -53 -14 0 -25 -43 -78 -79 -96
--93 -48 -210 -9 -247 81 -14 31 -17 33 -67 33 -28 -1 -75 -9 -103 -18z"
+-93 -48 -210 -9 -247 81 -14 31 -17 33 -67 33 -28 -1 -75 -9 -103 -18z'
 					/>
 				</g>
 			</svg>

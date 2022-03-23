@@ -2,7 +2,35 @@
 import React from "react";
 import Card from "./Card";
 
-export default function DeckCards({ numAlternativa, numCards }) {
+export default function DeckCards() {
+	// States Importantes
+	const [somatoriosPerguntas, setSomatoriosPerguntas] = React.useState([
+		0, 0, 0, 0, 0,
+	]);
+	const [alternativasMarcadasPerguntas, setAlternativasMarcadasPerguntas] =
+		React.useState([
+			[false, false, false, false, false, false, false],
+			[false, false, false, false, false, false, false],
+			[false, false, false, false, false, false, false],
+			[false, false, false, false, false, false, false],
+			[false, false, false, false, false, false, false],
+		]);
+	const [somatoriosGabarito, setSomatoriosGabarito] = React.useState([
+		0, 0, 0, 0, 0,
+	]);
+	const [alternativasMarcadasGabarito, setAlternativasMarcadasGabarito] =
+		React.useState([
+			[false, false, false, false, false, false, false],
+			[false, false, false, false, false, false, false],
+			[false, false, false, false, false, false, false],
+			[false, false, false, false, false, false, false],
+			[false, false, false, false, false, false, false],
+		]);
+	const [numCards, setNumCards] = React.useState(0);
+	const [numAlternativa, setNumAlternativa] = React.useState(0);
+	const [passarPage, setPassarPage] = React.useState(0);
+
+	// Variaveis Importatnes
 	let icones = {
 		avancar: (
 			<ion-icon
@@ -21,42 +49,57 @@ export default function DeckCards({ numAlternativa, numCards }) {
 				}}></ion-icon>
 		),
 	};
-    const [guardaSomatorio, setGuardaSomatorio] = React.useState(0);
-	const cardsPergunta = [];
-	const cardsGabarito = [];
 
-	const [passarPage, setPassarPage] = React.useState(0);
-	let gerarCards = () => {
-		for (let i = 0; i < numCards; i++) {
-            let teste = i
-			cardsPergunta.push(
-				<>
-					<Card
-						numAlternativas={numAlternativa}
-						numCards={`Questão ${i + 1}`}
-						key={`${teste}`}
-					/>
-				</>,
-			);
-			cardsGabarito.push(
-				<>
-					<Card
-						numAlternativas={numAlternativa}
-						numCards={"Gabarito"}
-						key={`${teste+1}`}
-					/>
-				</>,
-			);
-		}
-	};
-	gerarCards();
+	React.useEffect(() => {
+		setNumCards(prompt("Quantos cards você deseja?"));
+		setNumAlternativa(prompt("Quantas alternativas você deseja?"));
+	}, []);
+	
 	return (
-		<div className='cards'>
+		<div className='cards fadeInUp'>
 			{
 				<>
 					{passarPage > 0 ? icones.retornar : <></>}
-					{cardsPergunta[passarPage]}
-					{cardsGabarito[passarPage]}
+					{/* Card Perguntas */}
+					<Card
+						alterarSomatorio={(valorAlternativa) => {
+							let arrayControle = [...somatoriosPerguntas];
+							arrayControle[passarPage] =
+								arrayControle[passarPage] + valorAlternativa;
+							setSomatoriosPerguntas([...arrayControle]);
+						}}
+						somatorio={somatoriosPerguntas[passarPage]}
+						numAlternativas={numAlternativa}
+						numCards={`Questão ${passarPage + 1}`}
+						alternativasMarcadas={alternativasMarcadasPerguntas[passarPage]}
+						alterarAlternativa={(indexAlternativa) => {
+							let arrayControle = [...alternativasMarcadasPerguntas];
+							arrayControle[passarPage][indexAlternativa] =
+								!arrayControle[passarPage][indexAlternativa];
+							setAlternativasMarcadasPerguntas([...arrayControle]);
+						}}
+						key={`P`}
+					/>
+					{/* Card Gabarito */}
+					<Card
+						alterarSomatorio={(valorAlternativa) => {
+							let arrayControle = [...somatoriosGabarito];
+							arrayControle[passarPage] =
+								arrayControle[passarPage] + valorAlternativa;
+							setSomatoriosGabarito([...arrayControle]);
+						}}
+						somatorio={somatoriosGabarito[passarPage]}
+						numAlternativas={numAlternativa}
+						numCards={"Gabarito"}
+						alternativasMarcadas={alternativasMarcadasGabarito[passarPage]}
+						alterarAlternativa={(indexAlternativa) => {
+							let arrayControle = [...alternativasMarcadasGabarito];
+							arrayControle[passarPage][indexAlternativa] =
+								!arrayControle[passarPage][indexAlternativa];
+							setAlternativasMarcadasGabarito([...arrayControle]);
+						}}
+						key={`G`}
+					/>
 					{passarPage < numCards - 1 ? icones.avancar : <></>}
 				</>
 			}
