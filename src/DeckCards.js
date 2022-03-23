@@ -158,5 +158,5 @@ function calculadora(resposta, gabarito, alternativa) {
 		}
 		pontuacoes.push(pontuacaoFinalAluno / 100);
 	});
-	console.log(pontuacoes);
+	alert(pontuacoes)
 }
