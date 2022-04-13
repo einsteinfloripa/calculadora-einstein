@@ -1,16 +1,10 @@
-import React from "react";
+import { useContext } from "react";
 import CardsContext from "../App/CardsContext";
 
 // Função para construção do card (juntar tudo)
-export default function Card({
-	numCards,
-	somatorio,
-	alterarSomatorio,
-	alternativasMarcadas,
-	alterarAlternativa,
-}) {
+export default function Card({ numCards, numAlternativas }) {
 	return (
-		<div className='card'>
+		<div className='card fadeInUp'>
 			<div className='topo-card'>
 				<span>
 					<p className='titulo'>{numCards}</p>
@@ -19,77 +13,42 @@ export default function Card({
 					</p>
 				</span>
 			</div>
-			<MeioCard
-				alterarSomatorio={alterarSomatorio}
-				alternativasMarcadas={alternativasMarcadas}
-				alterarAlternativa={alterarAlternativa}
-			/>
+			<div className='meio-card'>
+				<MeioAlternativas numAlternativas={numAlternativas} />
+			</div>
 			<div className='base-card'>
 				<div>
 					<p>Sua Resposta</p>
 					<div className='sua-resposta'>
-						<p>{somatorio}</p>
+						<p>0</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	);
 }
-function MeioCard({
-	alterarSomatorio,
-	alternativasMarcadas,
-	alterarAlternativa,
-}) {
-	const { alternativas } = useContext(CardsContext);
+
+function MeioAlternativas({ numAlternativas }) {
 	const valoresAlternativas = [1, 2, 4, 8, 16, 32, 64];
-	const arrayAlternativasDesejadas = valoresAlternativas.filter((elemento) => {
-		return elemento <= valoresAlternativas[numAlternativas - 1];
+	const arrayAlternativasDesejadas = valoresAlternativas.filter((element) => {
+		return element <= valoresAlternativas[numAlternativas - 1];
 	});
 
-	return (
-		<div className='meio-card'>
-			<MeioAlternativas
-				alternativasDesejadas={arrayAlternativasDesejadas}
-				alterarSomatorio={alterarSomatorio}
-				alternativasMarcadas={alternativasMarcadas}
-				alterarAlternativa={alterarAlternativa}
-			/>
-		</div>
-	);
-}
-function MeioAlternativas({
-	alternativasDesejadas,
-	alterarSomatorio,
-	alternativasMarcadas,
-	alterarAlternativa,
-}) {
-	return alternativasDesejadas.map((element, index) => {
+	return arrayAlternativasDesejadas.map((element, index) => {
 		return (
 			<span className='alternativa' key={index}>
 				<p className='fadeIn'>{element}</p>
-				<GerarLogoSVG
-					valorAlternativa={element}
-					alterarSomatorio={alterarSomatorio}
-					meuIndex={index}
-					estadoAlternativa={alternativasMarcadas[index]}
-					alterarAlternativa={alterarAlternativa}
-				/>
+				<GerarLogoSVG id={index} />
 			</span>
 		);
 	});
 }
 
-function GerarLogoSVG({
-	valorAlternativa,
-	alterarSomatorio,
-	meuIndex,
-	estadoAlternativa,
-	alterarAlternativa,
-}) {
+function GerarLogoSVG({ id }) {
 	return (
 		<>
 			<svg
-				id={meuIndex}
+				id={id}
 				fill='white'
 				version='1.0'
 				xmlns='http://www.w3.org/2000/svg'
@@ -97,14 +56,7 @@ function GerarLogoSVG({
 				height='60px'
 				viewBox='0 0 330.000000 293.000000'
 				preserveAspectRatio='xMidYMid meet'
-				onClick={() => {
-					alterarAlternativa(meuIndex);
-					const valorAtualizar = !estadoAlternativa
-						? valorAlternativa
-						: valorAlternativa * -1;
-					alterarSomatorio(valorAtualizar);
-				}}
-				className={`fadeIn ${estadoAlternativa ? "selecionado" : ""}`}>
+				className={`fadeIn`}>
 				<g
 					transform='translate(0.000000,293.000000) scale(0.100000,-0.100000)'
 					stroke='black'

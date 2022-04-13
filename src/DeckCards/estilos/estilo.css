@@ -3,6 +3,7 @@
 }
 body {
 	background-color: #011E30;
+	overflow-x: hidden;
 }
 .cards {
 	width: 100vw;

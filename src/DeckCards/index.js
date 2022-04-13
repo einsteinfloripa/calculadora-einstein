@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import CardsContext from "../App/CardsContext";
 import Card from "./Card";
@@ -7,32 +7,11 @@ import "./estilos/estilo.css";
 export default function DeckCards() {
 	// States Importantes
 	const { questoes, alternativas } = useContext(CardsContext);
-
-	const [somatoriosPerguntas, setSomatoriosPerguntas] = useState([
-		0, 0, 0, 0, 0,
-	]);
-	const [alternativasMarcadasPerguntas, setAlternativasMarcadasPerguntas] =
-		useState([
-			[false, false, false, false, false, false, false],
-			[false, false, false, false, false, false, false],
-			[false, false, false, false, false, false, false],
-			[false, false, false, false, false, false, false],
-			[false, false, false, false, false, false, false],
-		]);
-	const [somatoriosGabarito, setSomatoriosGabarito] = useState([0, 0, 0, 0, 0]);
-	const [alternativasMarcadasGabarito, setAlternativasMarcadasGabarito] =
-		useState([
-			[false, false, false, false, false, false, false],
-			[false, false, false, false, false, false, false],
-			[false, false, false, false, false, false, false],
-			[false, false, false, false, false, false, false],
-			[false, false, false, false, false, false, false],
-		]);
-	const [numAlternativa, setNumAlternativa] = useState(4);
 	const [passarPage, setPassarPage] = useState(0);
-
+	const [cardMap, setCardMap] = useState(new Map());
+	const [cardArray, setCardArray] = useState([])
 	// Variaveis Importatnes
-	let icones = {
+	const icones = {
 		avancar: (
 			<ion-icon
 				name='chevron-forward-circle'
@@ -51,35 +30,35 @@ export default function DeckCards() {
 		),
 	};
 
+	useEffect(() => {
+		const arrayAlternativas = [...alternativas.values()];
+		arrayAlternativas.forEach((element, index) => {
+			const arrumaIndex = index + 1;
+			const numAlternativas = alternativas.get(arrumaIndex);
+
+			cardMap.set(
+				arrumaIndex,
+				<Card
+					numCards={`Questão ${arrumaIndex}`}
+					numAlternativas={numAlternativas}
+					key={`Card ${arrumaIndex}`}
+					id={`Question ${arrumaIndex}`}
+				/>,
+			);
+		});
+		setCardMap(cardMap);
+		setCardArray([...cardMap.values()])
+	}, []);
+
 	return (
-		<div className='cards fadeInUp'>
+		<div className='cards'>
 			{
 				<>
 					{passarPage > 0 ? icones.retornar : <></>}
-					{/* Card Perguntas */}
-					<Card
-						alterarSomatorio={(valorAlternativa) => {
-							let arrayControle = [...somatoriosPerguntas];
-							arrayControle[passarPage] =
-								arrayControle[passarPage] + valorAlternativa;
-							setSomatoriosPerguntas([...arrayControle]);
-						}}
-						somatorio={somatoriosPerguntas[passarPage]}
-						numAlternativas={numAlternativa}
-						numCards={`Questão ${passarPage + 1}`}
-						alternativasMarcadas={alternativasMarcadasPerguntas[passarPage]}
-						alterarAlternativa={(indexAlternativa) => {
-							let arrayControle = [...alternativasMarcadasPerguntas];
-							arrayControle[passarPage][indexAlternativa] =
-								!arrayControle[passarPage][indexAlternativa];
-							setAlternativasMarcadasPerguntas([...arrayControle]);
-						}}
-						key={`P`}
-					/>
+					{cardArray[passarPage]}
 					{passarPage < questoes.size - 1 ? icones.avancar : <></>}
 				</>
 			}
 		</div>
 	);
 }
-
