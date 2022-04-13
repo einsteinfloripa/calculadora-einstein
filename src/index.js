@@ -1,8 +1,5 @@
 import ReactDom from "react-dom";
-import DeckCards from "./DeckCards";
+import App from './App';
 
-function App() {
-	return <DeckCards />;
-}
+ReactDom.render(<App />, document.querySelector(".root"));
 
-ReactDom.render(App(), document.querySelector(".root"));

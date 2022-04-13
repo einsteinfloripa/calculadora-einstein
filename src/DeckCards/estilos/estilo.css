@@ -2,18 +2,11 @@
 	box-sizing: border-box;
 }
 body {
-	background-color: rgba(94, 94, 94, 0.397);
-	overflow-y: hidden;
+	background-color: #011E30;
 }
-.conteudo {
-	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
 .cards {
 	width: 100vw;
+	height: 100vh;
 	display: flex;
 	justify-content: space-around;
 	align-items: center;

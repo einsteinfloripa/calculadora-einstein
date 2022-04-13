@@ -1,8 +1,8 @@
 import React from "react";
+import CardsContext from "../App/CardsContext";
 
 // Função para construção do card (juntar tudo)
 export default function Card({
-	numAlternativas,
 	numCards,
 	somatorio,
 	alterarSomatorio,
@@ -11,36 +11,36 @@ export default function Card({
 }) {
 	return (
 		<div className='card'>
-			<TopoCard numCards={numCards} />
+			<div className='topo-card'>
+				<span>
+					<p className='titulo'>{numCards}</p>
+					<p className='paragrafo'>
+						Selecione abaixo as proposições que você considera corretas
+					</p>
+				</span>
+			</div>
 			<MeioCard
 				alterarSomatorio={alterarSomatorio}
-				numAlternativas={numAlternativas}
 				alternativasMarcadas={alternativasMarcadas}
 				alterarAlternativa={alterarAlternativa}
 			/>
-			<BaseCard somatorio={somatorio} />
-		</div>
-	);
-}
-// Funções que constroem as partes dos cards
-function TopoCard({ numCards }) {
-	return (
-		<div className='topo-card'>
-			<span>
-				<p className='titulo'>{numCards}</p>
-				<p className='paragrafo'>
-					Selecione abaixo as proposições que você considera corretas
-				</p>
-			</span>
+			<div className='base-card'>
+				<div>
+					<p>Sua Resposta</p>
+					<div className='sua-resposta'>
+						<p>{somatorio}</p>
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 }
 function MeioCard({
-	numAlternativas,
 	alterarSomatorio,
 	alternativasMarcadas,
 	alterarAlternativa,
 }) {
+	const { alternativas } = useContext(CardsContext);
 	const valoresAlternativas = [1, 2, 4, 8, 16, 32, 64];
 	const arrayAlternativasDesejadas = valoresAlternativas.filter((elemento) => {
 		return elemento <= valoresAlternativas[numAlternativas - 1];
@@ -79,18 +79,6 @@ function MeioAlternativas({
 	});
 }
 
-function BaseCard({ somatorio }) {
-	return (
-		<div className='base-card'>
-			<div>
-				<p>Sua Resposta</p>
-				<div className='sua-resposta'>
-					<p>{somatorio}</p>
-				</div>
-			</div>
-		</div>
-	);
-}
 function GerarLogoSVG({
 	valorAlternativa,
 	alterarSomatorio,
