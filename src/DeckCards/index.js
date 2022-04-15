@@ -9,7 +9,7 @@ export default function DeckCards() {
 	const { questoes, alternativas } = useContext(CardsContext);
 	const [passarPage, setPassarPage] = useState(0);
 	const [cardMap, setCardMap] = useState(new Map());
-	const [cardArray, setCardArray] = useState([])
+	const [cardArray, setCardArray] = useState([]);
 	// Variaveis Importatnes
 	const icones = {
 		avancar: (
@@ -47,7 +47,7 @@ export default function DeckCards() {
 			);
 		});
 		setCardMap(cardMap);
-		setCardArray([...cardMap.values()])
+		setCardArray([...cardMap.values()]);
 	}, []);
 
 	return (

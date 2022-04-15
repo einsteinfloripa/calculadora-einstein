@@ -7,9 +7,18 @@ import CardsContext from "./CardsContext";
 
 function App() {
 	const [questoes, setQuestoes] = useState(new Map());
-	const [alternativas, setAlternativas] = useState(new Map)
+	const [alternativas, setAlternativas] = useState(new Map());
+	const [alternativasMap, setAlternativasMap] = useState(new Map());
+	const contexts = {
+		questoes,
+		setQuestoes,
+		alternativas,
+		setAlternativas,
+		alternativasMap,
+		setAlternativasMap,
+	};
 	return (
-		<CardsContext.Provider value={{ questoes, setQuestoes, alternativas, setAlternativas }}>
+		<CardsContext.Provider value={contexts}>
 			<BrowserRouter>
 				<Routes>
 					<Route path='/' element={<Home />} />

@@ -1,10 +1,11 @@
-import { useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import CardsContext from "../App/CardsContext";
 
 // Função para construção do card (juntar tudo)
-export default function Card({ numCards, numAlternativas }) {
+export default function Card({ numCards, numAlternativas, id }) {
+	const { alternativasMap } = useContext(CardsContext);
 	return (
-		<div className='card fadeInUp'>
+		<div className='card fadeInUp' id={id}>
 			<div className='topo-card'>
 				<span>
 					<p className='titulo'>{numCards}</p>
@@ -14,13 +15,13 @@ export default function Card({ numCards, numAlternativas }) {
 				</span>
 			</div>
 			<div className='meio-card'>
-				<MeioAlternativas numAlternativas={numAlternativas} />
+				<MeioAlternativas numAlternativas={numAlternativas} id={id} />
 			</div>
 			<div className='base-card'>
 				<div>
 					<p>Sua Resposta</p>
 					<div className='sua-resposta'>
-						<p>0</p>
+						<p>{somatorio}</p>
 					</div>
 				</div>
 			</div>
@@ -28,7 +29,13 @@ export default function Card({ numCards, numAlternativas }) {
 	);
 }
 
-function MeioAlternativas({ numAlternativas }) {
+function MeioAlternativas({ numAlternativas, id }) {
+	//States
+	
+	const [alternativasSelecionada, setAlternativasSelecionadas] = useState(
+		new Map([[0, alternativasMap.get(id)]]),
+	);
+	//Variaveis
 	const valoresAlternativas = [1, 2, 4, 8, 16, 32, 64];
 	const arrayAlternativasDesejadas = valoresAlternativas.filter((element) => {
 		return element <= valoresAlternativas[numAlternativas - 1];
@@ -37,18 +44,39 @@ function MeioAlternativas({ numAlternativas }) {
 	return arrayAlternativasDesejadas.map((element, index) => {
 		return (
 			<span className='alternativa' key={index}>
-				<p className='fadeIn'>{element}</p>
-				<GerarLogoSVG id={index} />
+				<p>{element}</p>
+				<GerarLogoSVG
+					id={id}
+					alternativaValor={element}
+					alternativasSelecionada={alternativasSelecionada}
+					setAlternativasSelecionadas={(valor) => {
+						alternativasSelecionada.set(
+							valor,
+							!alternativasSelecionada.get(valor),
+						);
+						setAlternativasSelecionadas(alternativasSelecionada);
+					}}
+				/>
 			</span>
 		);
 	});
 }
 
-function GerarLogoSVG({ id }) {
+function GerarLogoSVG({
+	id,
+	alternativaValor,
+	alternativasSelecionada,
+	setAlternativasSelecionadas,
+}) {
+	const [gambiarra, setGambiarra] = useState(false);
+	const { alternativasMap, setAlternativasMap } = useContext(CardsContext);
+
+	const map = alternativasMap.get(id);
+	const boolean = alternativasMap.get(id) ? map.get(alternativaValor) : false;
+
 	return (
 		<>
 			<svg
-				id={id}
 				fill='white'
 				version='1.0'
 				xmlns='http://www.w3.org/2000/svg'
@@ -56,7 +84,13 @@ function GerarLogoSVG({ id }) {
 				height='60px'
 				viewBox='0 0 330.000000 293.000000'
 				preserveAspectRatio='xMidYMid meet'
-				className={`fadeIn`}>
+				onClick={() => {
+					setAlternativasSelecionadas(alternativaValor);
+					alternativasMap.set(id, alternativasSelecionada);
+					setAlternativasMap(alternativasMap);
+					setGambiarra(!gambiarra);
+				}}
+				className={`${boolean ? "selecionado" : ""}`}>
 				<g
 					transform='translate(0.000000,293.000000) scale(0.100000,-0.100000)'
 					stroke='black'

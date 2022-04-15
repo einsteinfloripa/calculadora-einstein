@@ -37,7 +37,7 @@ function Alternativa({ id }) {
 					alternativas.set(id, numAlternativas + 1);
 					setAlternativas(alternativas);
 				}}
-				disabled={numAlternativas === 8}>
+				disabled={numAlternativas === 7}>
 				<svg width='50px' height='50px' viewBox='0 0 50 80'>
 					<polyline
 						fill='none'
