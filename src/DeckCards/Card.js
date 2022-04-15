@@ -1,9 +1,13 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import CardsContext from "../App/CardsContext";
 
 // Função para construção do card (juntar tudo)
 export default function Card({ numCards, numAlternativas, id }) {
 	const { alternativasMap } = useContext(CardsContext);
+	const [alternativasSelecionada, setAlternativasSelecionadas] = useState(
+		new Map(alternativasMap.get(id)),
+	);
+	
 	return (
 		<div className='card fadeInUp' id={id}>
 			<div className='topo-card'>
@@ -15,13 +19,28 @@ export default function Card({ numCards, numAlternativas, id }) {
 				</span>
 			</div>
 			<div className='meio-card'>
-				<MeioAlternativas numAlternativas={numAlternativas} id={id} />
+				<MeioAlternativas
+					numAlternativas={numAlternativas}
+					id={id}
+					alternativasSelecionada={alternativasSelecionada}
+					setAlternativasSelecionadas={(valor) => {
+						const jaTemValor = alternativasSelecionada.has(valor);
+						if (jaTemValor) {
+							alternativasSelecionada.delete(valor);
+							setAlternativasSelecionadas(new Map(alternativasSelecionada));
+						} else {
+							alternativasSelecionada.set(valor, true);
+							setAlternativasSelecionadas(new Map(alternativasSelecionada));
+						}
+					}}
+					
+				/>
 			</div>
 			<div className='base-card'>
 				<div>
 					<p>Sua Resposta</p>
 					<div className='sua-resposta'>
-						<p>{somatorio}</p>
+						<p>{[...alternativasSelecionada.keys()].reduce((last, current) => last+current, 0)}</p>
 					</div>
 				</div>
 			</div>
@@ -29,12 +48,12 @@ export default function Card({ numCards, numAlternativas, id }) {
 	);
 }
 
-function MeioAlternativas({ numAlternativas, id }) {
-	//States
-	
-	const [alternativasSelecionada, setAlternativasSelecionadas] = useState(
-		new Map([[0, alternativasMap.get(id)]]),
-	);
+function MeioAlternativas({
+	numAlternativas,
+	id,
+	alternativasSelecionada,
+	setAlternativasSelecionadas,
+}) {
 	//Variaveis
 	const valoresAlternativas = [1, 2, 4, 8, 16, 32, 64];
 	const arrayAlternativasDesejadas = valoresAlternativas.filter((element) => {
@@ -43,21 +62,15 @@ function MeioAlternativas({ numAlternativas, id }) {
 
 	return arrayAlternativasDesejadas.map((element, index) => {
 		return (
-			<span className='alternativa' key={index}>
+			<div className='alternativa' key={index}>
 				<p>{element}</p>
 				<GerarLogoSVG
 					id={id}
 					alternativaValor={element}
 					alternativasSelecionada={alternativasSelecionada}
-					setAlternativasSelecionadas={(valor) => {
-						alternativasSelecionada.set(
-							valor,
-							!alternativasSelecionada.get(valor),
-						);
-						setAlternativasSelecionadas(alternativasSelecionada);
-					}}
+					setAlternativasSelecionadas={setAlternativasSelecionadas}
 				/>
-			</span>
+			</div>
 		);
 	});
 }
@@ -68,11 +81,7 @@ function GerarLogoSVG({
 	alternativasSelecionada,
 	setAlternativasSelecionadas,
 }) {
-	const [gambiarra, setGambiarra] = useState(false);
 	const { alternativasMap, setAlternativasMap } = useContext(CardsContext);
-
-	const map = alternativasMap.get(id);
-	const boolean = alternativasMap.get(id) ? map.get(alternativaValor) : false;
 
 	return (
 		<>
@@ -87,10 +96,11 @@ function GerarLogoSVG({
 				onClick={() => {
 					setAlternativasSelecionadas(alternativaValor);
 					alternativasMap.set(id, alternativasSelecionada);
-					setAlternativasMap(alternativasMap);
-					setGambiarra(!gambiarra);
+					setAlternativasMap(new Map(alternativasMap));
 				}}
-				className={`${boolean ? "selecionado" : ""}`}>
+				className={`${
+					alternativasSelecionada.has(alternativaValor) ? "selecionado" : ""
+				}`}>
 				<g
 					transform='translate(0.000000,293.000000) scale(0.100000,-0.100000)'
 					stroke='black'
