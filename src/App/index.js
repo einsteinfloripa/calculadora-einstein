@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 
+import Alternativa from "../Home/Alternativa";
 import DeckCards from "../DeckCards";
 import Home from "../Home";
 import CardsContext from "./CardsContext";

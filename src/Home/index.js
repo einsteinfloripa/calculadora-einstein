@@ -35,7 +35,7 @@ function Home() {
 				<img src={logo} alt='logo' onClick={() => {
 					const key = questoes.size + 1;
 					questoes.set(key, <Alternativa key={`Questao ${key}`} id={key}/>);
-					setQuestoes(questoes);
+					setQuestoes(new Map(questoes));
 					setArrayQuestoes([...questoes.values()])
 				}}/>
 				{arrayQuestoes.map(element => {return element})}

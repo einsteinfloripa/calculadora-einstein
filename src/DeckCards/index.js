@@ -8,8 +8,11 @@ export default function DeckCards() {
 	// States Importantes
 	const { questoes, alternativas } = useContext(CardsContext);
 	const [passarPage, setPassarPage] = useState(0);
-	const [cardMap, setCardMap] = useState(new Map());
-	const [cardArray, setCardArray] = useState([]);
+	const [cardQuestoes, setCardQuestoes] = useState(new Map());
+	const [cardGabaritos, setCardGabaritos] = useState(new Map());
+	const [cardQuestoesArray, setCardQuestoesArray] = useState([]);
+	const [cardGabaritoArray, setCardGabaritoArray] = useState([]);
+
 	// Variaveis Importatnes
 	const icones = {
 		avancar: (
@@ -36,18 +39,29 @@ export default function DeckCards() {
 			const arrumaIndex = index + 1;
 			const numAlternativas = alternativas.get(arrumaIndex);
 
-			cardMap.set(
+			cardQuestoes.set(
 				arrumaIndex,
 				<Card
 					numCards={`Questão ${arrumaIndex}`}
 					numAlternativas={numAlternativas}
-					key={`Card ${arrumaIndex}`}
-					id={`Question ${arrumaIndex}`}
+					key={`C ${arrumaIndex}`}
+					id={`Q${arrumaIndex}`}
+				/>,
+			);
+			cardGabaritos.set(
+				arrumaIndex,
+				<Card
+					numCards={`Gabarito ${arrumaIndex}`}
+					numAlternativas={numAlternativas}
+					key={`G ${arrumaIndex}`}
+					id={`G${arrumaIndex}`}
 				/>,
 			);
 		});
-		setCardMap(cardMap);
-		setCardArray([...cardMap.values()]);
+		setCardQuestoes(new Map(cardQuestoes));
+		setCardGabaritos(new Map(cardGabaritos));
+		setCardQuestoesArray([...cardQuestoes.values()]);
+		setCardGabaritoArray([...cardGabaritos.values()]);
 	}, []);
 
 	return (
@@ -55,7 +69,8 @@ export default function DeckCards() {
 			{
 				<>
 					{passarPage > 0 ? icones.retornar : <></>}
-					{cardArray[passarPage]}
+					{cardQuestoesArray[passarPage]}
+					{cardGabaritoArray[passarPage]}
 					{passarPage < questoes.size - 1 ? icones.avancar : <></>}
 				</>
 			}

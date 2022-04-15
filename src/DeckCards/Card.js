@@ -7,7 +7,7 @@ export default function Card({ numCards, numAlternativas, id }) {
 	const [alternativasSelecionada, setAlternativasSelecionadas] = useState(
 		new Map(alternativasMap.get(id)),
 	);
-	
+
 	return (
 		<div className='card fadeInUp' id={id}>
 			<div className='topo-card'>
@@ -33,14 +33,18 @@ export default function Card({ numCards, numAlternativas, id }) {
 							setAlternativasSelecionadas(new Map(alternativasSelecionada));
 						}
 					}}
-					
 				/>
 			</div>
 			<div className='base-card'>
 				<div>
 					<p>Sua Resposta</p>
 					<div className='sua-resposta'>
-						<p>{[...alternativasSelecionada.keys()].reduce((last, current) => last+current, 0)}</p>
+						<p>
+							{[...alternativasSelecionada.keys()].reduce(
+								(last, current) => last + current,
+								0,
+							)}
+						</p>
 					</div>
 				</div>
 			</div>

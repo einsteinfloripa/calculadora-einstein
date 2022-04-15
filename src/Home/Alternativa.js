@@ -6,7 +6,7 @@ import CardsContext from "../App/CardsContext";
 import "./estilos/efeitoSeta.css";
 
 function Alternativa({ id }) {
-	const [numAlternativas, setNumAlternativas] = useState(0);
+	const [numAlternativas, setNumAlternativas] = useState(1);
 	const { alternativas, setAlternativas } = useContext(CardsContext);
 	return (
 		<Corpo>
@@ -15,9 +15,9 @@ function Alternativa({ id }) {
 				onClick={() => {
 					setNumAlternativas(numAlternativas - 1);
 					alternativas.set(id, numAlternativas - 1);
-					setAlternativas(alternativas);
+					setAlternativas(new Map(alternativas));
 				}}
-				disabled={numAlternativas === 0}>
+				disabled={numAlternativas === 1}>
 				<svg width='50px' height='50px' viewBox='0 0 50 80'>
 					<polyline
 						fill='none'
