@@ -2,16 +2,43 @@
 	box-sizing: border-box;
 }
 body {
-	background-color: #011E30;
 	overflow-x: hidden;
+	z-index: 0;
+	width: 100%;
+	height: 100vh;
 }
 .cards {
+	position: relative;
+	z-index: 1;
 	width: 100vw;
 	height: 100vh;
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
 	overflow-y: hidden;
+	background-color: #011e30a9;
+}
+.cards::before {
+	content: " ";
+	position: absolute;
+	z-index: 0;
+	width: 100vw;
+	height: 100vh;
+	opacity: 0.4;
+	background-image: url("../../Assests/background.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.background::before {
+	content: " ";
+	position: absolute;
+	z-index: 0;
+	width: 100vw;
+	height: 100%;
+	opacity: 0.4;
+	background-image: url("../../Assests/background.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 .cards > ion-icon {
 	text-align: center;
@@ -26,7 +53,7 @@ body {
 	width: 400px;
 	border-radius: 10px;
 	background-color: white;
-	box-shadow: 8px 7px 6px 1px #7d7d7d;
+	box-shadow: 8px 7px 6px 1px #000000;
 }
 .avancar {
 	margin-left: 40px;
@@ -121,8 +148,14 @@ body {
 	text-align: center;
 	background-color: rgba(196, 191, 191, 0);
 }
-svg, ion-icon {
+svg,
+ion-icon {
 	cursor: pointer;
+}
+.teste {
+	width: 30px;
+	height: 30px;
+	background-color: aliceblue;
 }
 /* Animaçao */
 .fadeInUp {

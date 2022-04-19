@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 
 import CardsContext from "../App/CardsContext";
@@ -8,6 +8,11 @@ import "./estilos/efeitoSeta.css";
 function Alternativa({ id }) {
 	const [numAlternativas, setNumAlternativas] = useState(1);
 	const { alternativas, setAlternativas } = useContext(CardsContext);
+	useEffect(() => {
+		setNumAlternativas(numAlternativas);
+		alternativas.set(id, numAlternativas);
+		setAlternativas(new Map(alternativas));
+	}, []);
 	return (
 		<Corpo>
 			<button

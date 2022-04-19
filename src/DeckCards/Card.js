@@ -101,6 +101,7 @@ function GerarLogoSVG({
 					setAlternativasSelecionadas(alternativaValor);
 					alternativasMap.set(id, alternativasSelecionada);
 					setAlternativasMap(new Map(alternativasMap));
+					console.log(alternativasMap);
 				}}
 				className={`${
 					alternativasSelecionada.has(alternativaValor) ? "selecionado" : ""

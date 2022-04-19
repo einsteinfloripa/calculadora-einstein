@@ -1,12 +1,13 @@
 import { useState, useContext, useEffect } from "react";
 
 import CardsContext from "../App/CardsContext";
+import transformarMapEmArray from "../Assests/scripts/transformarMapEmArray";
 import Card from "./Card";
 import "./estilos/estilo.css";
 
 export default function DeckCards() {
 	// States Importantes
-	const { questoes, alternativas } = useContext(CardsContext);
+	const { questoes, alternativas, alternativasMap } = useContext(CardsContext);
 	const [passarPage, setPassarPage] = useState(0);
 	const [cardQuestoes, setCardQuestoes] = useState(new Map());
 	const [cardGabaritos, setCardGabaritos] = useState(new Map());
@@ -32,7 +33,6 @@ export default function DeckCards() {
 				}}></ion-icon>
 		),
 	};
-
 	useEffect(() => {
 		const arrayAlternativas = [...alternativas.values()];
 		arrayAlternativas.forEach((element, index) => {
@@ -62,6 +62,7 @@ export default function DeckCards() {
 		setCardGabaritos(new Map(cardGabaritos));
 		setCardQuestoesArray([...cardQuestoes.values()]);
 		setCardGabaritoArray([...cardGabaritos.values()]);
+		console.log(questoes);
 	}, []);
 
 	return (
@@ -72,6 +73,15 @@ export default function DeckCards() {
 					{cardQuestoesArray[passarPage]}
 					{cardGabaritoArray[passarPage]}
 					{passarPage < questoes.size - 1 ? icones.avancar : <></>}
+					{passarPage === questoes.size - 1 ? (
+						<button
+							className='button button--pandora fadeInUp'
+							onClick={() => transformarMapEmArray(alternativasMap, questoes)}>
+							<span>Calcular Nota</span>
+						</button>
+					) : (
+						<></>
+					)}
 				</>
 			}
 		</div>

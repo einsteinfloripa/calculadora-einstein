@@ -1,6 +1,7 @@
-function calculadora(resposta, gabarito, alternativa) {
+function calculadora(resposta, gabarito) {
 	let pontuacoes = [];
-
+	console.log(resposta);
+	console.log(gabarito);
 	[resposta].forEach((respostaAluno) => {
 		let pontuacaoFinalAluno = 0;
 		for (let i = 0; i < respostaAluno.length; i++) {
@@ -33,3 +34,4 @@ function calculadora(resposta, gabarito, alternativa) {
 	});
 	alert(`Sua nota é ${pontuacoes}`);
 }
+export default calculadora;

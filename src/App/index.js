@@ -7,8 +7,8 @@ import Home from "../Home";
 import CardsContext from "./CardsContext";
 
 function App() {
-	const [questoes, setQuestoes] = useState(new Map());
-	const [alternativas, setAlternativas] = useState(new Map());
+	const [questoes, setQuestoes] = useState(new Map([[1, <Alternativa key={`Questao ${1}`} id={1}/>]]));
+	const [alternativas, setAlternativas] = useState(new Map([[1, 1]]));
 	const [alternativasMap, setAlternativasMap] = useState(new Map());
 	const contexts = {
 		questoes,
