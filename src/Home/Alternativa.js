@@ -6,8 +6,10 @@ import CardsContext from "../App/CardsContext";
 import "./estilos/efeitoSeta.css";
 
 function Alternativa({ id }) {
-	const [numAlternativas, setNumAlternativas] = useState(1);
 	const { alternativas, setAlternativas } = useContext(CardsContext);
+	const [numAlternativas, setNumAlternativas] = useState(
+		alternativas.get(id) ? alternativas.get(id) : 1,
+	);
 	useEffect(() => {
 		setNumAlternativas(numAlternativas);
 		alternativas.set(id, numAlternativas);

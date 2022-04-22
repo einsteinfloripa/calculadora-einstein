@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import CardsContext from "../App/CardsContext";
 import transformarMapEmArray from "../Assests/scripts/transformarMapEmArray";
@@ -62,28 +63,37 @@ export default function DeckCards() {
 		setCardGabaritos(new Map(cardGabaritos));
 		setCardQuestoesArray([...cardQuestoes.values()]);
 		setCardGabaritoArray([...cardGabaritos.values()]);
-		console.log(questoes);
 	}, []);
 
 	return (
-		<div className='cards'>
-			{
-				<>
-					{passarPage > 0 ? icones.retornar : <></>}
-					{cardQuestoesArray[passarPage]}
-					{cardGabaritoArray[passarPage]}
-					{passarPage < questoes.size - 1 ? icones.avancar : <></>}
-					{passarPage === questoes.size - 1 ? (
-						<button
-							className='button button--pandora fadeInUp'
-							onClick={() => transformarMapEmArray(alternativasMap, questoes)}>
-							<span>Calcular Nota</span>
-						</button>
-					) : (
-						<></>
-					)}
-				</>
-			}
-		</div>
+		<>
+			<div className='cards'>
+				<Link to='/'>
+					<div className='back'>
+						<ion-icon name='chevron-back'></ion-icon>
+						<p>Retornar</p>
+					</div>
+				</Link>
+				{
+					<>
+						{passarPage > 0 ? icones.retornar : <></>}
+						{cardQuestoesArray[passarPage]}
+						{cardGabaritoArray[passarPage]}
+						{passarPage < questoes.size - 1 ? icones.avancar : <></>}
+						{passarPage === questoes.size - 1 ? (
+							<button
+								className='button button--pandora fadeInUp'
+								onClick={() =>
+									transformarMapEmArray(alternativasMap, questoes)
+								}>
+								<span>Calcular Nota</span>
+							</button>
+						) : (
+							<></>
+						)}
+					</>
+				}
+			</div>
+		</>
 	);
 }
