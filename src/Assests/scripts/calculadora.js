@@ -1,5 +1,6 @@
 function calculadora(resposta, gabarito) {
-	let pontuacoes = [];
+	const pontuacaoPorQuestao = [];
+	const pontuacoes = [];
 	[resposta].forEach((respostaAluno) => {
 		let pontuacaoFinalAluno = 0;
 		for (let i = 0; i < respostaAluno.length; i++) {
@@ -25,10 +26,18 @@ function calculadora(resposta, gabarito) {
 			}
 			if (NPC > NPI) {
 				P = (NP - (NTPC - (NPC - NPI))) / NP;
-				pontuacaoFinalAluno += parseInt((P * 100).toFixed());
+				const arredontaPontuacao = parseInt((P * 100).toFixed()) / 100;
+				pontuacaoFinalAluno += arredontaPontuacao;
+				pontuacaoPorQuestao.push(arredontaPontuacao);
+			} else {
+				P = 0;
+				const arredontaPontuacao = parseInt((P * 100).toFixed()) / 100;
+				pontuacaoFinalAluno += arredontaPontuacao;
+				pontuacaoPorQuestao.push(arredontaPontuacao);
 			}
 		}
-		pontuacoes.push(pontuacaoFinalAluno / 100);
+		console.log(pontuacaoPorQuestao);
+		pontuacoes.push(pontuacaoFinalAluno);
 	});
 	alert(`Sua nota é ${pontuacoes}`);
 }
