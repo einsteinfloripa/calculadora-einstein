@@ -16,49 +16,65 @@ function Alternativa({ id }) {
 		setAlternativas(new Map(alternativas));
 	}, []);
 	return (
-		<Corpo>
-			<button
-				className='arrow left'
-				onClick={() => {
-					setNumAlternativas(numAlternativas - 1);
-					alternativas.set(id, numAlternativas - 1);
-					setAlternativas(new Map(alternativas));
-				}}
-				disabled={numAlternativas === 1}>
-				<svg width='50px' height='50px' viewBox='0 0 50 80'>
-					<polyline
-						fill='none'
-						stroke='#FFFFFF'
-						strokeWidth='1'
-						strokeLinecap='round'
-						strokeLinejoin='round'
-						points='45.63,75.8 0.375,38.087 45.63,0.375'
-					/>
-				</svg>
-			</button>
-			<div className='caixa'>{numAlternativas}</div>
-			<button
-				className='arrow right'
-				onClick={() => {
-					setNumAlternativas(numAlternativas + 1);
-					alternativas.set(id, numAlternativas + 1);
-					setAlternativas(alternativas);
-				}}
-				disabled={numAlternativas === 7}>
-				<svg width='50px' height='50px' viewBox='0 0 50 80'>
-					<polyline
-						fill='none'
-						stroke='#FFFFFF'
-						strokeWidth='1'
-						strokeLinecap='round'
-						strokeLinejoin='round'
-						points='0.375,0.375 45.63,38.087 0.375,75.8'
-					/>
-				</svg>
-			</button>
-		</Corpo>
+		<Questao>
+			<p>{`Questão ${id}`}</p>
+			<Corpo>
+				<button
+					className='arrow left'
+					onClick={() => {
+						setNumAlternativas(numAlternativas - 1);
+						alternativas.set(id, numAlternativas - 1);
+						setAlternativas(new Map(alternativas));
+					}}
+					disabled={numAlternativas === 1}>
+					<svg width='50px' height='50px' viewBox='0 0 50 80'>
+						<polyline
+							fill='none'
+							stroke='#FFFFFF'
+							strokeWidth='1'
+							strokeLinecap='round'
+							strokeLinejoin='round'
+							points='45.63,75.8 0.375,38.087 45.63,0.375'
+						/>
+					</svg>
+				</button>
+				<div className='caixa'>{numAlternativas}</div>
+				<button
+					className='arrow right'
+					onClick={() => {
+						setNumAlternativas(numAlternativas + 1);
+						alternativas.set(id, numAlternativas + 1);
+						setAlternativas(alternativas);
+					}}
+					disabled={numAlternativas === 7}>
+					<svg width='50px' height='50px' viewBox='0 0 50 80'>
+						<polyline
+							fill='none'
+							stroke='#FFFFFF'
+							strokeWidth='1'
+							strokeLinecap='round'
+							strokeLinejoin='round'
+							points='0.375,0.375 45.63,38.087 0.375,75.8'
+						/>
+					</svg>
+				</button>
+			</Corpo>
+		</Questao>
 	);
 }
+
+const Questao = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	p {
+		color: #000000;
+		margin: 10px;
+		font-family: "Roboto", sans-serif;
+		font-size: 30px;
+		font-weight: 700;
+	}
+`;
 
 const Corpo = styled.div`
 	display: flex;

@@ -98,10 +98,23 @@ function GerarLogoSVG({
 				viewBox='0 0 330.000000 293.000000'
 				preserveAspectRatio='xMidYMid meet'
 				onClick={() => {
-					setAlternativasSelecionadas(alternativaValor);
-					alternativasMap.set(id, alternativasSelecionada);
-					setAlternativasMap(new Map(alternativasMap));
-					console.log(alternativasMap);
+					const somatorio = [...alternativasSelecionada.keys()].reduce(
+						(last, current) => last + current,
+						0,
+					);
+					const menorQue99 = somatorio + alternativaValor <= 99;
+					const jaSelecionado = alternativasSelecionada.has(alternativaValor);
+					if (menorQue99 && !jaSelecionado) {
+						setAlternativasSelecionadas(alternativaValor);
+						alternativasMap.set(id, alternativasSelecionada);
+						setAlternativasMap(new Map(alternativasMap));
+					} else if (jaSelecionado) {
+						setAlternativasSelecionadas(alternativaValor);
+						alternativasMap.set(id, alternativasSelecionada);
+						setAlternativasMap(new Map(alternativasMap));
+					} else {
+						alert("A soma deve ser menor que 99");
+					}
 				}}
 				className={`${
 					alternativasSelecionada.has(alternativaValor) ? "selecionado" : ""

@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import "../Assests/animacoes.css";
+import UtilizacaoFoto from '../Assests/utilizacao.jpg'
 
 function Informativo({ setIntro }) {
 	const [swapFade, setSwapFade] = useState(false);
@@ -20,16 +21,17 @@ function Informativo({ setIntro }) {
 				<MeioCard>
 					<p>
 						Olá pessoinha maravilhosa! Seja bem vindo a{" "}
-						<span>caculadora UFSC do EinsteinFloripa!</span> Nosso objetivo com
-						essa calculadora é facilitar a sua vida na hora de calcular sua
-						nota, pois sabemos que as vezes entender a fórmula é um pouco
-						díficil.
+						<span>Caculadora de Somatório do Einstein Floripa!</span> Nosso
+						objetivo com essa calculadora é facilitar a sua vida na hora de
+						calcular sua nota, pois sabemos que as vezes entender a fórmula é um
+						pouco díficil.
 					</p>
 					<p className='uso'>Como usar?</p>
-					<p className="instrucoes">
-						Você pode adicionar/remover a quantidade de questões e deve
-						escolher o número de alternativas que deseja por questão
+					<p className='instrucoes'>
+						Você pode adicionar/remover a quantidade de questões e deve escolher
+						o número de alternativas que deseja por questão
 					</p>
+					<img src={UtilizacaoFoto} alt='como usar as questoes' width={450}/>
 					<p className='formula'>Fórmula Utilizada</p>
 					<img src='https://i.imgur.com/3QUoWLF.png?1' alt='formula' />
 					<p className='report'>
@@ -47,22 +49,24 @@ function Informativo({ setIntro }) {
 }
 
 const Corpo = styled.div`
-	position: fixed;
+	position: absolute;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	z-index: 2;
 	background-color: #0000005c;
 	width: 100vw;
-	min-height: 100%;
 `;
 const CardInfo = styled.div`
+	margin-top: 10px;
+	margin-bottom: 10px;
 	display: flex;
 	flex-direction: column;
 	background-color: white;
 	width: 500px;
-	height: 600px;
+	min-height: 600px;
 	border-radius: 25px;
+	z-index: 2;
 `;
 const TopoCard = styled.div`
 	display: flex;

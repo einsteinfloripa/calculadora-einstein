@@ -36,17 +36,19 @@ function Home() {
 	}, []);
 
 	useLayoutEffect(() => {
-		const altura =
-			document.getElementsByClassName("background")[0].offsetHeight;
-		window.scroll({
-			top: altura,
-			left: 0,
-			behavior: "smooth",
-		});
+		if (intro) {
+			const altura =
+				document.getElementsByClassName("background")[0].offsetHeight;
+			window.scroll({
+				top: altura,
+				left: 0,
+				behavior: "smooth",
+			});
+		}
 	}, [questoes]);
 
 	return (
-		<Corpo className='background'>
+		<Corpo className='background' intro={intro}>
 			{mostrarInstrucoes()}
 			<Conteudo>
 				<img src={logo} alt='logo' />
@@ -103,7 +105,9 @@ const Corpo = styled.main`
 	display: flex;
 	justify-content: center;
 	width: 100vw;
-	min-height: 100vh;
+	min-height: ${(props) => {
+		return props.intro ? "100vh" : "755px";
+	}};
 	z-index: 1;
 	background-color: #011e30a9;
 	.corps {
