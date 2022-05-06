@@ -1,6 +1,7 @@
 function calculadora(resposta, gabarito) {
 	const pontuacaoPorQuestao = [];
 	const pontuacoes = [];
+	let mensagem = "";
 	[resposta].forEach((respostaAluno) => {
 		let pontuacaoFinalAluno = 0;
 		for (let i = 0; i < respostaAluno.length; i++) {
@@ -36,9 +37,16 @@ function calculadora(resposta, gabarito) {
 				pontuacaoPorQuestao.push(arredontaPontuacao);
 			}
 		}
-		console.log(pontuacaoPorQuestao);
 		pontuacoes.push(pontuacaoFinalAluno);
 	});
-	alert(`Sua nota é ${pontuacoes}`);
+	pontuacaoPorQuestao.forEach((element, index) => {
+		if (index === pontuacaoPorQuestao.length - 1) {
+			mensagem += `Questão ${index + 1} = ${element}`;
+		} else {
+			mensagem += `Questão ${index + 1} = ${element} + `;
+		}
+	});
+	alert(`${mensagem} 
+	Total=${pontuacoes[0].toFixed(2)}`);
 }
 export default calculadora;
